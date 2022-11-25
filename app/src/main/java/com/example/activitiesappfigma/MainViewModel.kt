@@ -2,12 +2,14 @@ package com.example.activitiesappfigma
 
 import android.app.Application
 import android.content.ContentValues.TAG
+import android.media.Image
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.activitiesappfigma.data.Repository
 import com.example.activitiesappfigma.data.model.Category
+import com.example.activitiesappfigma.data.model.Event
 import com.example.activitiesappfigma.data.model.Profile
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -37,9 +39,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
 
+    // LiveData für Profil
     private val _profile = MutableLiveData<Profile>()
     val profile: LiveData<Profile>
         get() = _profile
+
+    // LiveData für Events
+    private val _event = MutableLiveData<Event>()
+    val event: LiveData<Event>
+        get() = _event
 
     private val _toast = MutableLiveData<String?>()
     val toast: LiveData<String?>
@@ -80,6 +88,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
+    private fun setEvent(event: Event) {
+        db.collection("events").document(currentUser.value!!.uid)
+            .set(event)
+            .addOnFailureListener {
+                Log.e(TAG,"Error writing document: $it")
+                _toast.value = "error creating user\n${it.localizedMessage}"
+                _toast.value = null
+            }
+    }
+
+    fun startEvent(image: Int, name: String, info: String, dateTime: String, routine: Boolean, event: Event) {
+    }
+
     fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
@@ -93,4 +114,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+    fun logout() {
+        firebaseAuth.signOut()
+        _currentUser.value = firebaseAuth.currentUser
+    }
+
+    fun getProfileData() {
+        db.collection("users").document(currentUser.value!!.uid)
+            .get().addOnSuccessListener {
+                _profile.value = it.toObject(Profile::class.java)
+            }
+            .addOnFailureListener {
+                Log.e(TAG, "Error reading document: $it")
+            }
+    }
+
 }
