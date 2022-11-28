@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.activitiesappfigma.MainActivity
 import com.example.activitiesappfigma.MainViewModel
+import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Event
 import com.example.activitiesappfigma.databinding.FragmentEventeditBinding
 
@@ -37,13 +40,33 @@ class EventEditFragment: Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        private fun startEvent() {
-            var eventEditName = binding.eventeditTextInputName.text.toString()
-            var eventEditInfo = binding.eventeditTextInputInfo.text.toString()
-            var eventEditDateTime = binding.eventeditInputDateTime.text.toString()
-            var eventEditLocation = binding.eventeditTextInputLocation.text.toString()
-            var eventEditCategory = binding.categorySpinner.selectedItem
-            var eventEditRoutine = binding.eventeditRoutineRadioBtn
+        binding.categorySpinner.setOnTouchListener { view, motionEvent ->
+            val imm: InputMethodManager =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
+
+
+        fun startEvent() {
+            val eventEditName = binding.eventeditTextInputName.text.toString()
+            val eventEditInfo = binding.eventeditTextInputInfo.text.toString()
+            val eventEditDateTime = binding.eventeditInputDateTime.text.toString()
+            val eventEditLocation = binding.eventeditTextInputLocation.text.toString()
+            val eventEditCategory = binding.categorySpinner.selectedItem.toString()
+            val eventEditRoutine = binding.routineSwitchButton
+
+            var isRoutine = false
+
+            eventEditRoutine.setOnCheckedChangeListener { compoundButton, onswitch ->
+                if(onswitch) {
+                    isRoutine = true
+                }
+            }
+
+            if(isRoutine) {
+
+            }
 
             if(!eventEditName.isNullOrEmpty() &&!eventEditInfo.isNullOrEmpty() && !eventEditDateTime
                     .isNullOrEmpty() && !eventEditLocation.isNullOrEmpty()) {
@@ -52,12 +75,21 @@ class EventEditFragment: Fragment(){
                     info = eventEditInfo,
                     dateAndTime = eventEditDateTime,
                     location = eventEditLocation,
-                    category = eventEditCategory
+                    category = eventEditCategory,
+                    routine = isRoutine
                 )
+                viewModel.setEvent(newEvent)
             }
         }
 
-
+        binding.eventeditStartEventButton.setOnClickListener {
+            startEvent()
+            binding.eventeditTextInputName.text = null
+            binding.eventeditTextInputInfo.text = null
+            binding.eventeditInputDateTime.text = null
+            binding.eventeditTextInputLocation.text = null
+            findNavController().navigate(R.id.eventDetailFragment)
+        }
 
     }
 

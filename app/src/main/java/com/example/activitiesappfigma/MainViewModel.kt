@@ -88,7 +88,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-    private fun setEvent(event: Event) {
+    fun setEvent(event: Event) {
         db.collection("events").document(currentUser.value!!.uid)
             .set(event)
             .addOnFailureListener {
@@ -98,8 +98,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-    fun startEvent(image: Int, name: String, info: String, dateTime: String, routine: Boolean, event: Event) {
-    }
+
 
     fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -124,6 +123,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         db.collection("users").document(currentUser.value!!.uid)
             .get().addOnSuccessListener {
                 _profile.value = it.toObject(Profile::class.java)
+            }
+            .addOnFailureListener {
+                Log.e(TAG, "Error reading document: $it")
+            }
+    }
+
+    fun getEventData() {
+        db.collection("events").document(currentUser.value!!.uid)
+            .get().addOnSuccessListener {
+                _event.value = it.toObject(Event::class.java)
             }
             .addOnFailureListener {
                 Log.e(TAG, "Error reading document: $it")

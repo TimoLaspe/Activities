@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Event
+import com.example.activitiesappfigma.databinding.FragmentEventeditBinding
 
 class EventAdapter() : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
 
@@ -31,6 +33,8 @@ class EventAdapter() : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
         notifyDataSetChanged()
     }
 
+
+
     // ERSTELLEN DES VIEWHOLDERS
     // hier werden neue ViewHolder erstellt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -42,11 +46,19 @@ class EventAdapter() : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
         return ItemViewHolder(adapterLayout)
     }
 
+
     // BEFÜLLEN DES VIEWHOLDERS
     // hier findet der Recyclingprozess statt
     // die vom ViewHolder bereitgestellten Parameter werden verändert
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item: Event = dataset[position]
+        holder.eventItemImage.setImageResource(R.drawable.app_logo)
+        holder.eventNameText.text = item.name
+        holder.eventItemDateText.text = "Datum"
+        holder.eventItemTimeText.text = "Uhrzeit"
+        holder.eventPlaceText.text = item.location
+        holder.eventProfileName.text = "Profilname"
+        holder.eventMemberCount.text = "10"
 
 
     }
@@ -55,3 +67,5 @@ class EventAdapter() : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
         return dataset.size
     }
 }
+
+

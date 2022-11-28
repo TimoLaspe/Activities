@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@drawable/background_simple">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/eventedit_toolbar"
@@ -130,24 +130,25 @@
             app:layout_constraintStart_toStartOf="@+id/eventedit_eventLocation"
             app:layout_constraintTop_toBottomOf="@+id/eventedit_eventLocation" />
 
-        <RadioButton
-            android:id="@+id/eventedit_routine_radioBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Routine"
-            app:layout_constraintStart_toStartOf="@+id/category_spinner"
-            app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
-
         <Button
             android:id="@+id/eventedit_startEvent_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/main_color"
             android:text="Event starten"
-            app:layout_constraintBottom_toBottomOf="@+id/eventedit_routine_radioBtn"
+            app:layout_constraintBottom_toBottomOf="@+id/routine_switch_button"
             app:layout_constraintEnd_toEndOf="@+id/category_spinner"
-            app:layout_constraintTop_toTopOf="@+id/eventedit_routine_radioBtn" />
+            app:layout_constraintTop_toTopOf="@+id/routine_switch_button" />
+
+        <Switch
+            android:id="@+id/routine_switch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="Routine"
+            app:layout_constraintStart_toStartOf="@+id/category_spinner"
+            app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
