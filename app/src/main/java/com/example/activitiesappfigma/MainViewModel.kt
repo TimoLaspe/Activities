@@ -2,7 +2,7 @@ package com.example.activitiesappfigma
 
 import android.app.Application
 import android.content.ContentValues.TAG
-import android.media.Image
+import android.provider.CalendarContract
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+
 
     private val repository = Repository()
 
@@ -49,9 +50,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val event: LiveData<Event>
         get() = _event
 
+    private val _events = MutableLiveData<List<Event>>()
+    val events: LiveData<List<Event>>
+        get() = _events
+
     private val _toast = MutableLiveData<String?>()
     val toast: LiveData<String?>
         get() = _toast
+
 
     // hier wird versucht einen User zu erstellen um diesen anschließend auch gleich
     // einzuloggen
@@ -88,17 +94,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-    fun setEvent(event: Event) {
-        db.collection("events").document(currentUser.value!!.uid)
-            .set(event)
+    fun insertEvent(event: Event) {
+        db.collection("events").add(event)
             .addOnFailureListener {
-                Log.e(TAG,"Error writing document: $it")
+                Log.e(TAG, "Error writing document: $it")
                 _toast.value = "error creating user\n${it.localizedMessage}"
                 _toast.value = null
             }
     }
 
-
+    fun setEvent(event: Event) {
+        _event.value = event
+    }
 
     fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -130,13 +137,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getEventData() {
-        db.collection("events").document(currentUser.value!!.uid)
-            .get().addOnSuccessListener {
-                _event.value = it.toObject(Event::class.java)
+            db.collection("events")
+            .get()
+            .addOnSuccessListener { result ->
+                val out = mutableListOf<Event>()
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    out.add(document.toObject(Event::class.java))
+                }
+                _events.value = out
             }
-            .addOnFailureListener {
-                Log.e(TAG, "Error reading document: $it")
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
             }
     }
-
 }

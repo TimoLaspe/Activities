@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ import com.example.activitiesappfigma.MainActivity
 import com.example.activitiesappfigma.MainViewModel
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.adapter.EventAdapter
+import com.example.activitiesappfigma.data.model.Event
 import com.example.activitiesappfigma.databinding.FragmentEventlistBinding
 
 
@@ -41,7 +43,22 @@ class EventListFragment: Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val eventAdapter = EventAdapter()
+
+        val eventAdapter = EventAdapter(viewModel)
+
+        var list : List<Event>
+
+
+        binding.eventRecycler.adapter = eventAdapter
+        viewModel.getEventData()
+
+        viewModel.events.observe(
+            viewLifecycleOwner,
+            Observer {
+               list = it
+                eventAdapter.submitList(list)
+            }
+        )
 
         viewModel.currentUser.observe(
             viewLifecycleOwner,

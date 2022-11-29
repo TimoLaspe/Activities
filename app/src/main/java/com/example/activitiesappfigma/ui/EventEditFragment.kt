@@ -16,7 +16,7 @@ import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Event
 import com.example.activitiesappfigma.databinding.FragmentEventeditBinding
 
-class EventEditFragment: Fragment(){
+class EventEditFragment : Fragment() {
 
     lateinit var binding: FragmentEventeditBinding
     private val viewModel: MainViewModel by activityViewModels()
@@ -47,41 +47,6 @@ class EventEditFragment: Fragment(){
         }
 
 
-
-        fun startEvent() {
-            val eventEditName = binding.eventeditTextInputName.text.toString()
-            val eventEditInfo = binding.eventeditTextInputInfo.text.toString()
-            val eventEditDateTime = binding.eventeditInputDateTime.text.toString()
-            val eventEditLocation = binding.eventeditTextInputLocation.text.toString()
-            val eventEditCategory = binding.categorySpinner.selectedItem.toString()
-            val eventEditRoutine = binding.routineSwitchButton
-
-            var isRoutine = false
-
-            eventEditRoutine.setOnCheckedChangeListener { compoundButton, onswitch ->
-                if(onswitch) {
-                    isRoutine = true
-                }
-            }
-
-            if(isRoutine) {
-
-            }
-
-            if(!eventEditName.isNullOrEmpty() &&!eventEditInfo.isNullOrEmpty() && !eventEditDateTime
-                    .isNullOrEmpty() && !eventEditLocation.isNullOrEmpty()) {
-                val newEvent = Event(
-                    name = eventEditName,
-                    info = eventEditInfo,
-                    dateAndTime = eventEditDateTime,
-                    location = eventEditLocation,
-                    category = eventEditCategory,
-                    routine = isRoutine
-                )
-                viewModel.setEvent(newEvent)
-            }
-        }
-
         binding.eventeditStartEventButton.setOnClickListener {
             startEvent()
             binding.eventeditTextInputName.text = null
@@ -93,4 +58,35 @@ class EventEditFragment: Fragment(){
 
     }
 
+
+    private fun startEvent() {
+        val eventEditName = binding.eventeditTextInputName.text.toString()
+        val eventEditInfo = binding.eventeditTextInputInfo.text.toString()
+        val eventEditDateTime = binding.eventeditInputDateTime.text.toString()
+        val eventEditLocation = binding.eventeditTextInputLocation.text.toString()
+        val eventEditCategory = binding.categorySpinner.selectedItem.toString()
+        val eventEditRoutine = binding.routineSwitchButton
+
+        var isRoutine = false
+
+        eventEditRoutine.setOnCheckedChangeListener { compoundButton, onswitch ->
+            if (onswitch) isRoutine = true
+            else isRoutine = false
+        }
+
+
+        if (!eventEditName.isNullOrEmpty() && !eventEditInfo.isNullOrEmpty() && !eventEditDateTime
+                .isNullOrEmpty() && !eventEditLocation.isNullOrEmpty()
+        ) {
+            val newEvent = Event(
+                name = eventEditName,
+                info = eventEditInfo,
+                dateAndTime = eventEditDateTime,
+                location = eventEditLocation,
+                category = eventEditCategory,
+                routine = isRoutine
+            )
+            viewModel.insertEvent(newEvent)
+        }
+    }
 }

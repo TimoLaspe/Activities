@@ -42,17 +42,11 @@ class EventDetailFragment: Fragment(){
         viewModel.event.observe(
             viewLifecycleOwner,
             Observer {
-                if (it != null) {
-                    viewModel.getEventData()
                     binding.detailImage.setImageResource(R.drawable.app_logo)
                     binding.detailEventnameText.text = it.name
                     binding.detailDescriptionText.text = it.info
                     binding.detailLocationText.text = it.location
-                    binding.detailDateText.text = "22.12.2022"
-                    binding.detailTimeText.text = "19 Uhr"
-                    binding.detailMembercountText.text = "10"
-                    binding.detailProfilenameText.text = "Timo Laspe"
-                }
+                    binding.detailDateText.text = it.dateAndTime
             }
         )
 

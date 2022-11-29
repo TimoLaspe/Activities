@@ -1,9 +1,14 @@
 package com.example.activitiesappfigma.data
 
+import androidx.lifecycle.LiveData
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Category
+import com.example.activitiesappfigma.data.model.Event
+import com.google.firebase.database.*
 
 class Repository {
+
+
 
     fun loadCategory(): List<Category> {
 
@@ -100,5 +105,4 @@ class Repository {
             )
         )
     }
-
 }

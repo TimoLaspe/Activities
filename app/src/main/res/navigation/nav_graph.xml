@@ -49,6 +49,15 @@
         <action
             android:id="@+id/action_eventDetailFragment_to_eventListFragment"
             app:destination="@id/eventListFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="info"
+            app:argType="string" />
+        <argument
+            android:name="dateTime"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/eventEditFragment"

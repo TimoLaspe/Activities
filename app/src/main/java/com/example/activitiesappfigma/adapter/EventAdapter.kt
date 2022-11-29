@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.activitiesappfigma.MainViewModel
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Event
 import com.example.activitiesappfigma.databinding.FragmentEventeditBinding
 
-class EventAdapter() : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
+class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
 
-
-    private lateinit var dataset: List<Event>
 
     // IDEE EINES VIEWHOLDERS
     // der ViewHolder weiß welche Teile des Layouts beim Recycling angepasst werden
@@ -26,7 +27,10 @@ class EventAdapter() : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
         var eventProfileName: TextView = view.findViewById(R.id.event_item_profile_name_text)
         var eventPlaceText: TextView = view.findViewById(R.id.event_item_place_text)
         var eventMemberCount: TextView = view.findViewById(R.id.event_item_member_count)
+        var eventListCard: CardView = view.findViewById((R.id.event_item_card))
     }
+
+    private var dataset = listOf<Event>()
 
     fun submitList(list: List<Event>) {
         dataset = list
@@ -54,12 +58,16 @@ class EventAdapter() : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
         val item: Event = dataset[position]
         holder.eventItemImage.setImageResource(R.drawable.app_logo)
         holder.eventNameText.text = item.name
-        holder.eventItemDateText.text = "Datum"
-        holder.eventItemTimeText.text = "Uhrzeit"
+        holder.eventItemDateText.text = "12.12.2022"
+        holder.eventItemTimeText.text = "19 Uhr"
         holder.eventPlaceText.text = item.location
         holder.eventProfileName.text = "Profilname"
         holder.eventMemberCount.text = "10"
 
+        holder.eventListCard.setOnClickListener {
+            viewModel.setEvent(item)
+            holder.itemView.findNavController().navigate(R.id.eventDetailFragment)
+        }
 
     }
     // damit der LayoutManager weiß wie lang die Liste ist
