@@ -84,32 +84,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/eventedit_dateTimePicker"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventInfo"
-            app:layout_constraintStart_toStartOf="@+id/eventedit_eventInfo"
-            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventInfo">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/eventedit_InputDateTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Datum und Uhrzeit"
-                android:inputType="datetime" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/eventedit_eventLocation"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/eventedit_dateTimePicker"
-            app:layout_constraintStart_toStartOf="@+id/eventedit_dateTimePicker"
-            app:layout_constraintTop_toBottomOf="@+id/eventedit_dateTimePicker">
+            app:layout_constraintStart_toStartOf="@+id/date_text_tv"
+            app:layout_constraintTop_toBottomOf="@+id/date_text_tv">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/eventedit_textInputLocation"
@@ -149,6 +130,25 @@
             android:text="Routine"
             app:layout_constraintStart_toStartOf="@+id/category_spinner"
             app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
+
+        <ImageButton
+            android:id="@+id/btn_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/eventedit_eventLocation"
+            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventInfo"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventInfo"
+            app:srcCompat="@drawable/ic_baseline_calendar_month_24" />
+
+        <TextView
+            android:id="@+id/date_text_tv"
+            android:layout_width="238dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/eventedit_eventInfo"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventInfo"
+            tools:text="Datum" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

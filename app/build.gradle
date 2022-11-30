@@ -90,4 +90,7 @@ dependencies {
     // Firebase UI
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
     implementation 'com.firebaseui:firebase-ui-database:8.0.1'
+
+    // Kalender
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 }

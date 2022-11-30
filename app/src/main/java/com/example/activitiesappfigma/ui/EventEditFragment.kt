@@ -46,12 +46,30 @@ class EventEditFragment : Fragment() {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
+        binding.btnCalendar.setOnClickListener {
+            // create new instance of DatePickerFragment
+            val datePickerFragment = DatePicker()
+            val supportFragmentManager = requireActivity().supportFragmentManager
+
+            // we have to implement setFragmentResultListener
+            supportFragmentManager.setFragmentResultListener(
+                "REQUEST_KEY",
+                viewLifecycleOwner
+            ) { resultKey, bundle ->
+                if (resultKey == "REQUEST_KEY") {
+                    val date = bundle.getString("SELECTED_DATE")
+                    binding.dateTextTv.text = date
+                }
+            }
+
+            datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
+        }
 
         binding.eventeditStartEventButton.setOnClickListener {
             startEvent()
             binding.eventeditTextInputName.text = null
             binding.eventeditTextInputInfo.text = null
-            binding.eventeditInputDateTime.text = null
+            binding.dateTextTv.text = null
             binding.eventeditTextInputLocation.text = null
             findNavController().navigate(R.id.eventDetailFragment)
         }
@@ -62,7 +80,7 @@ class EventEditFragment : Fragment() {
     private fun startEvent() {
         val eventEditName = binding.eventeditTextInputName.text.toString()
         val eventEditInfo = binding.eventeditTextInputInfo.text.toString()
-        val eventEditDateTime = binding.eventeditInputDateTime.text.toString()
+        val eventEditDateTime = binding.dateTextTv.text.toString()
         val eventEditLocation = binding.eventeditTextInputLocation.text.toString()
         val eventEditCategory = binding.categorySpinner.selectedItem.toString()
         val eventEditRoutine = binding.routineSwitchButton
