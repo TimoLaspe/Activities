@@ -11,6 +11,58 @@
         android:layout_height="match_parent"
         android:alpha="50">
 
+        <TextView
+            android:id="@+id/weather_celsius_text_rainy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="°C"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/weather_temp_text_rainy"
+            app:layout_constraintStart_toEndOf="@+id/weather_temp_text_rainy"
+            app:layout_constraintTop_toTopOf="@+id/weather_temp_text_rainy"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/weather_temp_text_rainy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/weather_icon_rain"
+            app:layout_constraintTop_toTopOf="@+id/weather_icon_rain"
+            tools:text="19"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/weather_celsius_text_cloudy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="°C"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/weather_temp_text_cloudy"
+            app:layout_constraintStart_toEndOf="@+id/weather_temp_text_cloudy"
+            app:layout_constraintTop_toTopOf="@+id/weather_temp_text_cloudy"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/weather_temp_text_cloudy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/weather_icon_cloud"
+            app:layout_constraintTop_toTopOf="@+id/weather_icon_cloud"
+            tools:text="19"
+            tools:visibility="gone" />
+
         <ImageView
             android:id="@+id/event_item_image"
             android:layout_width="140dp"
@@ -130,5 +182,61 @@
             app:layout_constraintEnd_toStartOf="@+id/event_item_member_text"
             app:layout_constraintTop_toTopOf="@+id/event_item_member_text"
             tools:text="23" />
+
+        <ImageView
+            android:id="@+id/weather_icon_sun"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/event_item_image"
+            app:layout_constraintTop_toTopOf="@+id/event_item_image"
+            app:srcCompat="@drawable/ic_baseline_wb_sunny_24"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/weather_temp_text_sunny"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/weather_icon_sun"
+            app:layout_constraintTop_toTopOf="@+id/weather_icon_sun"
+            tools:text="20"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/weather_celsius_text_sunny"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="°C"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/weather_temp_text_sunny"
+            app:layout_constraintStart_toEndOf="@+id/weather_temp_text_sunny"
+            app:layout_constraintTop_toTopOf="@+id/weather_temp_text_sunny"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/weather_icon_cloud"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/event_item_image"
+            app:layout_constraintTop_toTopOf="@+id/event_item_image"
+            app:srcCompat="@drawable/ic_baseline_wb_cloudy_24"
+            tools:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/weather_icon_rain"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/event_item_image"
+            app:layout_constraintTop_toTopOf="@+id/event_item_image"
+            app:srcCompat="@drawable/ic_baseline_water_drop_24"
+            tools:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

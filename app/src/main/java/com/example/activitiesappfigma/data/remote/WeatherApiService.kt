@@ -1,6 +1,7 @@
 package com.example.activitiesappfigma.data.remote
 
 import com.example.activitiesappfigma.data.model.ServerResponse
+import com.example.activitiesappfigma.data.model.WeatherObject
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -8,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-const val BASE_URL = "https://itunes.apple.com/"
+const val BASE_URL = "https://api.brightsky.dev/"
 
 
 private val moshi = Moshi.Builder()
@@ -21,11 +22,15 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 
-interface SongApiService {
-    @GET("search")
-    suspend fun getResult(@Query("term") term: String, @Query("media") media: String): ServerResponse
+interface ApiService {
+
+    @GET("weather")
+    suspend fun getWeather(@Query("lat") lat: Double, @Query("lon") lon: Double, @Query("date") date: String): WeatherObject
+
 }
 
-object SearchApi {
-    val retrofitservice: SongApiService by lazy { retrofit.create(SongApiService::class.java) }
+object WeatherApi{
+    val retrofitService: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
+    }
 }

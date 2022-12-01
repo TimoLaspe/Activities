@@ -1,13 +1,16 @@
 package com.example.activitiesappfigma.data
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Category
 import com.example.activitiesappfigma.data.model.Event
+import com.example.activitiesappfigma.data.model.WeatherData
+import com.example.activitiesappfigma.data.remote.WeatherApi
 import com.google.firebase.database.*
 
-class Repository {
-
+class Repository (private val api: WeatherApi) {
 
 
     fun loadCategory(): List<Category> {
@@ -105,4 +108,17 @@ class Repository {
             )
         )
     }
+
+    suspend fun getWeather(lat: Double, lon: Double, date: String) : List<WeatherData> {
+        try {
+
+            val result = api.retrofitService.getWeather(52.0, 7.6, "2022-12-10")
+            return result.data
+
+        }catch (e: Exception){
+            Log.e(ContentValues.TAG, "Error loading weather from API: $e")
+        }
+        return listOf()
+    }
+
 }

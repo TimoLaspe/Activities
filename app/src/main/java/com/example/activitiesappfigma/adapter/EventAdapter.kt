@@ -43,6 +43,7 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
     // hier werden neue ViewHolder erstellt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // das itemLayout wird gebaut
+        viewModel.loadWeather(100)
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.event_list_item, parent, false)
 

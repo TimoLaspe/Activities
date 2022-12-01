@@ -23,6 +23,8 @@ class EventListFragment: Fragment(){
 
     lateinit var binding: FragmentEventlistBinding
     private val viewModel: MainViewModel by activityViewModels()
+    var lat: Double = 52.0
+    var lon: Double = 7.6
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +58,9 @@ class EventListFragment: Fragment(){
             viewLifecycleOwner,
             Observer {
                list = it
+                for (event in it) {
+                    viewModel.loadWeather()
+                }
                 eventAdapter.submitList(list)
             }
         )

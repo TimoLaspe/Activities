@@ -7,19 +7,23 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.activitiesappfigma.data.Repository
 import com.example.activitiesappfigma.data.model.Category
 import com.example.activitiesappfigma.data.model.Event
 import com.example.activitiesappfigma.data.model.Profile
+import com.example.activitiesappfigma.data.model.WeatherData
+import com.example.activitiesappfigma.data.remote.WeatherApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private val repository = Repository()
+    private val repository = Repository(WeatherApi)
 
     private val _category = MutableLiveData<List<Category>>()
     val category: LiveData<List<Category>>
@@ -151,4 +155,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 Log.w(TAG, "Error getting documents: ", exception)
             }
     }
+
+    fun loadWeather(lat: Double, lon: Double, date: String) : List<WeatherData> {
+        viewModelScope.launch {
+            return@launch repository.getWeather(lat, lon, date)
+        }
+    }
+
 }

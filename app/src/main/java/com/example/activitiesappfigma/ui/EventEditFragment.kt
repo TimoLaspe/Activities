@@ -71,7 +71,7 @@ class EventEditFragment : Fragment() {
             binding.eventeditTextInputInfo.text = null
             binding.dateTextTv.text = null
             binding.eventeditTextInputLocation.text = null
-            findNavController().navigate(R.id.eventDetailFragment)
+            findNavController().navigate(R.id.eventListFragment)
         }
 
     }
