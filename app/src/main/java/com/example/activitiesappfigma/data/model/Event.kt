@@ -11,5 +11,6 @@ data class Event (
     var dateAndTime: String = "",
     var location: String = "",
     var routine: Boolean = false,
-    var category: String = ""
+    var category: String = "",
+    var weather: String = ""
     )

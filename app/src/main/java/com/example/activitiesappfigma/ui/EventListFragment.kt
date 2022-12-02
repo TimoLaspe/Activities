@@ -1,10 +1,12 @@
 package com.example.activitiesappfigma.ui
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
@@ -19,7 +21,7 @@ import com.example.activitiesappfigma.data.model.Event
 import com.example.activitiesappfigma.databinding.FragmentEventlistBinding
 
 
-class EventListFragment: Fragment(){
+class EventListFragment: Fragment() {
 
     lateinit var binding: FragmentEventlistBinding
     private val viewModel: MainViewModel by activityViewModels()
@@ -42,14 +44,12 @@ class EventListFragment: Fragment(){
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
         val eventAdapter = EventAdapter(viewModel)
-
-        var list : List<Event>
-
 
         binding.eventRecycler.adapter = eventAdapter
         viewModel.getEventData()
@@ -57,11 +57,15 @@ class EventListFragment: Fragment(){
         viewModel.events.observe(
             viewLifecycleOwner,
             Observer {
-               list = it
-                for (event in it) {
-                    viewModel.loadWeather()
+                viewModel.loadWeather(it)
+            }
+        )
+
+        viewModel.updatedEvents.observe(
+            viewLifecycleOwner, Observer {
+                if (it != null) {
+                    eventAdapter.submitList(it)
                 }
-                eventAdapter.submitList(list)
             }
         )
 
@@ -75,5 +79,4 @@ class EventListFragment: Fragment(){
         )
 
     }
-
 }

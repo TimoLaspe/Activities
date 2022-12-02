@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar6"
+            android:id="@+id/detail_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/main_color"
@@ -30,10 +30,10 @@
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar6"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar6"
+            app:layout_constraintBottom_toBottomOf="@+id/detail_toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/detail_toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/toolbar6" />
+            app:layout_constraintTop_toTopOf="@+id/detail_toolbar" />
 
         <ScrollView
             android:id="@+id/scrollView2"
@@ -42,7 +42,7 @@
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar6">
+            app:layout_constraintTop_toBottomOf="@+id/detail_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -224,7 +224,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/detail_photos_title"
-                    tools:itemCount="4"
+                    tools:itemCount="5"
                     tools:listitem="@layout/eventdetail_photo_item" />
 
                 <Button

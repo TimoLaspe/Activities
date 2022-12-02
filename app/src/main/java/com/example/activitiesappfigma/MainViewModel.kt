@@ -2,8 +2,10 @@ package com.example.activitiesappfigma
 
 import android.app.Application
 import android.content.ContentValues.TAG
+import android.os.Build
 import android.provider.CalendarContract
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +19,9 @@ import com.example.activitiesappfigma.data.remote.WeatherApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.ktx.storageMetadata
 import kotlinx.coroutines.launch
+import java.net.URI
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -62,6 +66,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val toast: LiveData<String?>
         get() = _toast
 
+    val updatedEvents = repository.events
+
+   // private val sto = FirebaseFirestorage.getInstance()
+
+    /*
+    private val _image: String
+    var image: String = ""
+        get() = _image
+     */
+
 
     // hier wird versucht einen User zu erstellen um diesen anschließend auch gleich
     // einzuloggen
@@ -97,6 +111,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 _toast.value = null
             }
     }
+
+ //   fun uploadImage (uri: URI) {
+   //     val imageR = storageRef.child(currentUser.value?.uid)
+    //}
 
     fun insertEvent(event: Event) {
         db.collection("events").add(event)
@@ -141,7 +159,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getEventData() {
-            db.collection("events")
+        db.collection("events")
             .get()
             .addOnSuccessListener { result ->
                 val out = mutableListOf<Event>()
@@ -156,9 +174,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-    fun loadWeather(lat: Double, lon: Double, date: String) : List<WeatherData> {
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun loadWeather(events: List<Event>) {
         viewModelScope.launch {
-            return@launch repository.getWeather(lat, lon, date)
+            repository.getWeatherForEvents(events)
         }
     }
 

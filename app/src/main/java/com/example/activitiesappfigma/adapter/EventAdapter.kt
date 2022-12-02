@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.activitiesappfigma.MainViewModel
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Event
+import com.example.activitiesappfigma.data.model.WeatherData
 import com.example.activitiesappfigma.databinding.FragmentEventeditBinding
 
 class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
@@ -28,9 +29,19 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
         var eventPlaceText: TextView = view.findViewById(R.id.event_item_place_text)
         var eventMemberCount: TextView = view.findViewById(R.id.event_item_member_count)
         var eventListCard: CardView = view.findViewById((R.id.event_item_card))
+        var weatherIconSunny : ImageView = view.findViewById(R.id.weather_icon_sun)
+        var weatherIconRainy : ImageView = view.findViewById(R.id.weather_icon_rain)
+        var weatherIconCloudy : ImageView = view.findViewById(R.id.weather_icon_cloud)
+        var weatherTempSunny : TextView = view.findViewById(R.id.weather_temp_text_sunny)
+        var weatherTempRainy : TextView = view.findViewById(R.id.weather_temp_text_rainy)
+        var weatherTempCloudy : TextView = view.findViewById(R.id.weather_temp_text_cloudy)
+        var weatherCelsiusSunny : TextView = view.findViewById(R.id.weather_celsius_text_sunny)
+        var weatherCelsiusRainy : TextView = view.findViewById(R.id.weather_celsius_text_rainy)
+        var weatherCelsiusCloudy : TextView = view.findViewById(R.id.weather_celsius_text_cloudy)
     }
 
     private var dataset = listOf<Event>()
+    private var weatherDataset = listOf<WeatherData>()
 
     fun submitList(list: List<Event>) {
         dataset = list
@@ -43,7 +54,6 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
     // hier werden neue ViewHolder erstellt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // das itemLayout wird gebaut
-        viewModel.loadWeather(100)
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.event_list_item, parent, false)
 
@@ -64,6 +74,14 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
         holder.eventPlaceText.text = item.location
         holder.eventProfileName.text = "Profilname"
         holder.eventMemberCount.text = "10"
+
+        val weatherItem: WeatherData = weatherDataset[position]
+        if(item.weather == "sunny") {
+            holder.weatherIconSunny.visibility = View.VISIBLE
+            holder.weatherTempSunny.visibility = View.VISIBLE
+            holder.weatherCelsiusSunny.visibility = View.VISIBLE
+            holder.weatherTempSunny.text = weatherItem.temp.toString()
+        }
 
         holder.eventListCard.setOnClickListener {
             viewModel.setEvent(item)

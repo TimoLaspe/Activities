@@ -191,7 +191,7 @@
             app:layout_constraintStart_toEndOf="@+id/event_item_image"
             app:layout_constraintTop_toTopOf="@+id/event_item_image"
             app:srcCompat="@drawable/ic_baseline_wb_sunny_24"
-            tools:visibility="visible" />
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/weather_temp_text_sunny"
@@ -204,7 +204,7 @@
             app:layout_constraintStart_toEndOf="@+id/weather_icon_sun"
             app:layout_constraintTop_toTopOf="@+id/weather_icon_sun"
             tools:text="20"
-            tools:visibility="visible" />
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/weather_celsius_text_sunny"
@@ -217,7 +217,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/weather_temp_text_sunny"
             app:layout_constraintStart_toEndOf="@+id/weather_temp_text_sunny"
             app:layout_constraintTop_toTopOf="@+id/weather_temp_text_sunny"
-            tools:visibility="visible" />
+            tools:visibility="gone" />
 
         <ImageView
             android:id="@+id/weather_icon_cloud"
