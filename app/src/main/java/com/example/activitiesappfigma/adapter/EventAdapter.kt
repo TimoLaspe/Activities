@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.activitiesappfigma.MainViewModel
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Event
+import com.example.activitiesappfigma.data.model.Profile
 import com.example.activitiesappfigma.data.model.WeatherData
 import com.example.activitiesappfigma.databinding.FragmentEventeditBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
-class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
+class EventAdapter(private val viewModel: MainViewModel) :
+    RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
 
 
     // IDEE EINES VIEWHOLDERS
@@ -29,15 +32,15 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
         var eventPlaceText: TextView = view.findViewById(R.id.event_item_place_text)
         var eventMemberCount: TextView = view.findViewById(R.id.event_item_member_count)
         var eventListCard: CardView = view.findViewById((R.id.event_item_card))
-        var weatherIconSunny : ImageView = view.findViewById(R.id.weather_icon_sun)
-        var weatherIconRainy : ImageView = view.findViewById(R.id.weather_icon_rain)
-        var weatherIconCloudy : ImageView = view.findViewById(R.id.weather_icon_cloud)
-        var weatherTempSunny : TextView = view.findViewById(R.id.weather_temp_text_sunny)
-        var weatherTempRainy : TextView = view.findViewById(R.id.weather_temp_text_rainy)
-        var weatherTempCloudy : TextView = view.findViewById(R.id.weather_temp_text_cloudy)
-        var weatherCelsiusSunny : TextView = view.findViewById(R.id.weather_celsius_text_sunny)
-        var weatherCelsiusRainy : TextView = view.findViewById(R.id.weather_celsius_text_rainy)
-        var weatherCelsiusCloudy : TextView = view.findViewById(R.id.weather_celsius_text_cloudy)
+        var weatherIconSunny: ImageView = view.findViewById(R.id.weather_icon_sun)
+        var weatherIconRainy: ImageView = view.findViewById(R.id.weather_icon_rain)
+        var weatherIconCloudy: ImageView = view.findViewById(R.id.weather_icon_cloud)
+        var weatherTempSunny: TextView = view.findViewById(R.id.weather_temp_text_sunny)
+        var weatherTempRainy: TextView = view.findViewById(R.id.weather_temp_text_rainy)
+        var weatherTempCloudy: TextView = view.findViewById(R.id.weather_temp_text_cloudy)
+        var weatherCelsiusSunny: TextView = view.findViewById(R.id.weather_celsius_text_sunny)
+        var weatherCelsiusRainy: TextView = view.findViewById(R.id.weather_celsius_text_rainy)
+        var weatherCelsiusCloudy: TextView = view.findViewById(R.id.weather_celsius_text_cloudy)
     }
 
     private var dataset = listOf<Event>()
@@ -47,7 +50,6 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
         dataset = list
         notifyDataSetChanged()
     }
-
 
 
     // ERSTELLEN DES VIEWHOLDERS
@@ -69,19 +71,21 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
         val item: Event = dataset[position]
         holder.eventItemImage.setImageResource(R.drawable.app_logo)
         holder.eventNameText.text = item.name
-        holder.eventItemDateText.text = "12.12.2022"
+        holder.eventItemDateText.text = item.dateAndTime
         holder.eventItemTimeText.text = "19 Uhr"
         holder.eventPlaceText.text = item.location
         holder.eventProfileName.text = "Profilname"
         holder.eventMemberCount.text = "10"
 
-        val weatherItem: WeatherData = weatherDataset[position]
-        if(item.weather == "sunny") {
-            holder.weatherIconSunny.visibility = View.VISIBLE
-            holder.weatherTempSunny.visibility = View.VISIBLE
-            holder.weatherCelsiusSunny.visibility = View.VISIBLE
-            holder.weatherTempSunny.text = weatherItem.temp.toString()
-        }
+        /*
+         val weatherItem: WeatherData = weatherDataset[position]
+         if(item.weather == "sunny") {
+             holder.weatherIconSunny.visibility = View.VISIBLE
+             holder.weatherTempSunny.visibility = View.VISIBLE
+             holder.weatherCelsiusSunny.visibility = View.VISIBLE
+             holder.weatherTempSunny.text = weatherItem.temp.toString()
+         }
+ */
 
         holder.eventListCard.setOnClickListener {
             viewModel.setEvent(item)
@@ -89,6 +93,7 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
         }
 
     }
+
     // damit der LayoutManager weiß wie lang die Liste ist
     override fun getItemCount(): Int {
         return dataset.size

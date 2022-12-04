@@ -40,6 +40,8 @@ class EventEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.eventeditImage.setImageResource(R.drawable.app_logo)
+
         binding.categorySpinner.setOnTouchListener { view, motionEvent ->
             val imm: InputMethodManager =
                 requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

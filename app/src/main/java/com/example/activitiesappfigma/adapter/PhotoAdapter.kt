@@ -44,8 +44,7 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.ItemViewHolder>() {
     // die vom ViewHolder bereitgestellten Parameter werden verändert
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item: Photo = dataset[position]
-        holder.detailPhotoImage.setImageResource(R.drawable.app_logo)
-
+        holder.detailPhotoImage = item.image
     }
 
     // damit der LayoutManager weiß wie lang die Liste ist

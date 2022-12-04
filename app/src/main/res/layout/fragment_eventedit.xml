@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Neues Event"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/eventedit_toolbar"
@@ -46,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventedit_toolbar"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:srcCompat="@drawable/app_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/eventedit_eventName"
@@ -62,7 +62,8 @@
                 android:id="@+id/eventedit_textInputName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Eventname" />
+                android:hint="Eventname"
+                android:textColor="#000000" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +80,8 @@
                 android:id="@+id/eventedit_textInputInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Eventbeschreibung" />
+                android:hint="Eventbeschreibung"
+                android:textColor="#000000" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,27 +91,29 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@+id/date_text_tv"
-            app:layout_constraintTop_toBottomOf="@+id/date_text_tv">
+            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventInfo"
+            app:layout_constraintStart_toStartOf="@+id/eventedit_eventInfo"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventInfo">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/eventedit_textInputLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ort" />
+                android:hint="Ort"
+                android:textColor="#000000" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/category_spinner"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:entries="@array/category_list"
             android:spinnerMode="dropdown"
-            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventLocation"
-            app:layout_constraintStart_toStartOf="@+id/eventedit_eventLocation"
-            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventLocation" />
+            app:layout_constraintEnd_toEndOf="@+id/btn_calendar"
+            app:layout_constraintStart_toStartOf="@+id/date_text_tv"
+            app:layout_constraintTop_toBottomOf="@+id/date_text_tv" />
 
         <Button
             android:id="@+id/eventedit_startEvent_button"
@@ -135,19 +139,24 @@
             android:id="@+id/btn_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/eventedit_eventLocation"
-            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventInfo"
-            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventInfo"
+            android:backgroundTint="@color/main_color"
+            android:tint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/date_text_tv"
+            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventLocation"
+            app:layout_constraintTop_toTopOf="@+id/date_text_tv"
             app:srcCompat="@drawable/ic_baseline_calendar_month_24" />
 
         <TextView
             android:id="@+id/date_text_tv"
-            android:layout_width="238dp"
-            android:layout_height="49dp"
+            android:layout_width="234dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:hint="Datum"
+            android:paddingStart="8dp"
+            android:textColor="#000000"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/eventedit_eventInfo"
-            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventInfo"
+            app:layout_constraintStart_toStartOf="@+id/eventedit_eventLocation"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventLocation"
             tools:text="Datum" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

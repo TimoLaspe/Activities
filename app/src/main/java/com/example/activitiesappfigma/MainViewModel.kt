@@ -11,10 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.activitiesappfigma.data.Repository
-import com.example.activitiesappfigma.data.model.Category
-import com.example.activitiesappfigma.data.model.Event
-import com.example.activitiesappfigma.data.model.Profile
-import com.example.activitiesappfigma.data.model.WeatherData
+import com.example.activitiesappfigma.data.model.*
 import com.example.activitiesappfigma.data.remote.WeatherApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -28,6 +25,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val repository = Repository(WeatherApi)
+
+    private val _photo = MutableLiveData<MutableList<Photo>>()
+    val photo: LiveData<MutableList<Photo>>
+        get() = _photo
 
     private val _category = MutableLiveData<List<Category>>()
     val category: LiveData<List<Category>>
@@ -157,6 +158,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 Log.e(TAG, "Error reading document: $it")
             }
     }
+
 
     fun getEventData() {
         db.collection("events")

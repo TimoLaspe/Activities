@@ -20,7 +20,7 @@ import com.example.activitiesappfigma.data.model.Photo
 import com.example.activitiesappfigma.databinding.FragmentEventdetailBinding
 
 
-class EventDetailFragment: Fragment(){
+class EventDetailFragment : Fragment() {
 
     lateinit var binding: FragmentEventdetailBinding
     private val viewModel: MainViewModel by activityViewModels()
@@ -47,31 +47,28 @@ class EventDetailFragment: Fragment(){
         val photoAdapter = PhotoAdapter()
         binding.photoRecycler.adapter = photoAdapter
 
-/*
-        val list : MutableList<Photo>
-
-        viewModel.event.observe(
+        viewModel.photo.observe(
             viewLifecycleOwner,
-            Observer {
-                photoAdapter.submitList(list)
+            androidx.lifecycle.Observer {
+                photoAdapter.submitList(it)
             }
         )
-*/
+
         viewModel.getEventData()
 
         viewModel.event.observe(
             viewLifecycleOwner,
             Observer {
-                    binding.detailImage.setImageResource(R.drawable.app_logo)
-                    binding.detailEventnameText.text = it.name
-                    binding.detailDescriptionText.text = it.info
-                    binding.detailLocationText.text = it.location
-                    binding.detailDateText.text = it.dateAndTime
+                binding.detailImage.setImageResource(R.drawable.app_logo)
+                binding.detailEventnameText.text = it.name
+                binding.detailDescriptionText.text = it.info
+                binding.detailLocationText.text = it.location
+                binding.detailDateText.text = it.dateAndTime
+                binding.detailProfilenameText.text = it.id
+                binding.detailMembercountText.text = "10"
+                binding.detailTimeText.text = "19 Uhr"
             }
         )
-
-
-
 
 
     }

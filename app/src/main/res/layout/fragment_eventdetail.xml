@@ -53,11 +53,11 @@
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                    tools:srcCompat="@drawable/app_logo" />
 
                 <TextView
                     android:id="@+id/detail_eventname_text"
