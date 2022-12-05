@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentId
 data class Event (
     @DocumentId
     var id: String = "",
-    var image: Int = 0,
+    var image: String = "",
     var name: String = "",
     var info: String = "",
     var dateAndTime: String = "",

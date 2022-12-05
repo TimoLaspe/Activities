@@ -77,15 +77,9 @@ class EventAdapter(private val viewModel: MainViewModel) :
         holder.eventProfileName.text = "Profilname"
         holder.eventMemberCount.text = "10"
 
-        /*
-         val weatherItem: WeatherData = weatherDataset[position]
-         if(item.weather == "sunny") {
-             holder.weatherIconSunny.visibility = View.VISIBLE
-             holder.weatherTempSunny.visibility = View.VISIBLE
-             holder.weatherCelsiusSunny.visibility = View.VISIBLE
-             holder.weatherTempSunny.text = weatherItem.temp.toString()
-         }
- */
+        when(item.weather) {
+
+        }
 
         holder.eventListCard.setOnClickListener {
             viewModel.setEvent(item)
