@@ -14,7 +14,7 @@ import com.example.activitiesappfigma.data.model.Photo
 class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.ItemViewHolder>() {
 
 
-    private var dataset = mutableListOf<Photo>()
+    lateinit var dataset: List<Photo>
 
     // IDEE EINES VIEWHOLDERS
     // der ViewHolder weiß welche Teile des Layouts beim Recycling angepasst werden
@@ -23,7 +23,7 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.ItemViewHolder>() {
         var detailPhotoImage: ImageView = view.findViewById(R.id.photo_image)
     }
 
-    fun submitList(list: MutableList<Photo>) {
+    fun submitList(list: List<Photo>) {
         dataset = list
         notifyDataSetChanged()
     }
@@ -44,7 +44,7 @@ class PhotoAdapter() : RecyclerView.Adapter<PhotoAdapter.ItemViewHolder>() {
     // die vom ViewHolder bereitgestellten Parameter werden verändert
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item: Photo = dataset[position]
-        holder.detailPhotoImage = item.image
+        holder.detailPhotoImage.setImageResource(item.image)
     }
 
     // damit der LayoutManager weiß wie lang die Liste ist

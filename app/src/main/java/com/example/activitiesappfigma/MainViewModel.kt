@@ -26,9 +26,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = Repository(WeatherApi)
 
-    private val _photo = MutableLiveData<MutableList<Photo>>()
-    val photo: LiveData<MutableList<Photo>>
+    private val _photo = MutableLiveData<List<Photo>>()
+    val photo: LiveData<List<Photo>>
         get() = _photo
+
+    init {
+        _photo.value = repository.loadPhoto()
+    }
 
     private val _category = MutableLiveData<List<Category>>()
     val category: LiveData<List<Category>>

@@ -9,11 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Category
 import com.example.activitiesappfigma.data.model.Event
+import com.example.activitiesappfigma.data.model.Photo
 import com.example.activitiesappfigma.data.model.WeatherData
 import com.example.activitiesappfigma.data.remote.WeatherApi
 import com.google.firebase.database.*
 
-class Repository (private val api: WeatherApi) {
+class Repository(private val api: WeatherApi) {
 
     private val _events = MutableLiveData<List<Event>>()
     val events: LiveData<List<Event>>
@@ -116,6 +117,28 @@ class Repository (private val api: WeatherApi) {
         )
     }
 
+    fun loadPhoto(): List<Photo> {
+
+        return listOf(
+            Photo(
+                R.drawable.photo_one
+            ),
+            Photo(
+                R.drawable.photo_two
+            ),
+            Photo(
+                R.drawable.photo_three
+            ),
+            Photo(
+                R.drawable.photo_four
+            ),
+            Photo(
+                R.drawable.photo_five
+            )
+        )
+    }
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getWeatherForEvents(events: List<Event>) {
         val updatedEvents = mutableListOf<Event>()
@@ -135,13 +158,13 @@ class Repository (private val api: WeatherApi) {
         _events.value = updatedEvents
     }
 
-    suspend fun getWeather(lon: Double, lat: Double, date: String) : List<WeatherData> {
+    suspend fun getWeather(lon: Double, lat: Double, date: String): List<WeatherData> {
         try {
 
             val result = api.retrofitService.getWeather(52.0, 7.6, date)
             return result.data
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.e(ContentValues.TAG, "Error loading weather from API: $e")
         }
         return listOf()
