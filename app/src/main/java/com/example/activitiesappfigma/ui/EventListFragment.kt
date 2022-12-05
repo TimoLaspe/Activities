@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,6 +20,8 @@ import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.adapter.EventAdapter
 import com.example.activitiesappfigma.data.model.Event
 import com.example.activitiesappfigma.databinding.FragmentEventlistBinding
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 
 class EventListFragment: Fragment() {
@@ -27,6 +30,8 @@ class EventListFragment: Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     var lat: Double = 52.0
     var lon: Double = 7.6
+
+    var image = R.id.event_item_image
 
     override fun onCreateView(
         inflater: LayoutInflater,

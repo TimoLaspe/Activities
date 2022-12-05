@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.os.Build
 import android.provider.CalendarContract
 import android.util.Log
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -16,6 +17,8 @@ import com.example.activitiesappfigma.data.remote.WeatherApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
 import kotlinx.coroutines.launch
 import java.net.URI

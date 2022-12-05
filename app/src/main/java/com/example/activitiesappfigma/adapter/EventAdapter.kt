@@ -6,9 +6,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.example.activitiesappfigma.MainViewModel
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Event
@@ -17,8 +21,7 @@ import com.example.activitiesappfigma.data.model.WeatherData
 import com.example.activitiesappfigma.databinding.FragmentEventeditBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
-class EventAdapter(private val viewModel: MainViewModel) :
-    RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
+class EventAdapter(private val viewModel: MainViewModel, var weatherDataset : List<WeatherData>) : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
 
 
     // IDEE EINES VIEWHOLDERS
@@ -31,7 +34,7 @@ class EventAdapter(private val viewModel: MainViewModel) :
         var eventProfileName: TextView = view.findViewById(R.id.event_item_profile_name_text)
         var eventPlaceText: TextView = view.findViewById(R.id.event_item_place_text)
         var eventMemberCount: TextView = view.findViewById(R.id.event_item_member_count)
-        var eventListCard: CardView = view.findViewById((R.id.event_item_card))
+        var eventListCard: CardView = view.findViewById(R.id.event_item_card)
         var weatherIconSunny: ImageView = view.findViewById(R.id.weather_icon_sun)
         var weatherIconRainy: ImageView = view.findViewById(R.id.weather_icon_rain)
         var weatherIconCloudy: ImageView = view.findViewById(R.id.weather_icon_cloud)
@@ -44,7 +47,8 @@ class EventAdapter(private val viewModel: MainViewModel) :
     }
 
     private var dataset = listOf<Event>()
-    private var weatherDataset = listOf<WeatherData>()
+
+
 
     fun submitList(list: List<Event>) {
         dataset = list
@@ -52,10 +56,12 @@ class EventAdapter(private val viewModel: MainViewModel) :
     }
 
 
+
     // ERSTELLEN DES VIEWHOLDERS
     // hier werden neue ViewHolder erstellt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // das itemLayout wird gebaut
+
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.event_list_item, parent, false)
 
@@ -69,7 +75,6 @@ class EventAdapter(private val viewModel: MainViewModel) :
     // die vom ViewHolder bereitgestellten Parameter werden verändert
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item: Event = dataset[position]
-        holder.eventItemImage.setImageResource(R.drawable.app_logo)
         holder.eventNameText.text = item.name
         holder.eventItemDateText.text = item.dateAndTime
         holder.eventItemTimeText.text = "19 Uhr"
@@ -77,8 +82,70 @@ class EventAdapter(private val viewModel: MainViewModel) :
         holder.eventProfileName.text = "Profilname"
         holder.eventMemberCount.text = "10"
 
-        when(item.weather) {
 
+        val weatherItem: WeatherData = weatherDataset[position]
+        holder.weatherTempSunny.text = weatherItem.temp
+        holder.weatherTempCloudy.text = weatherItem.temp
+        holder.weatherTempRainy.text = weatherItem.temp
+
+
+
+        when(weatherItem.icon) {
+            "clear-day" ->
+                holder.weatherIconSunny.visibility = View.VISIBLE
+            "clear-night" ->
+                holder.weatherIconSunny.visibility = View.VISIBLE
+            "partly-cloudy-day" ->
+                holder.weatherIconCloudy.visibility = View.VISIBLE
+            "partly-cloudy-night" ->
+                holder.weatherIconCloudy.visibility = View.VISIBLE
+            "cloudy" ->
+                holder.weatherIconCloudy.visibility = View.VISIBLE
+            "fog" ->
+                holder.weatherIconCloudy.visibility = View.VISIBLE
+            "wind" ->
+                holder.weatherIconCloudy.visibility = View.VISIBLE
+            "rain" ->
+                holder.weatherIconRainy.visibility = View.VISIBLE
+            "sleet" ->
+                holder.weatherIconRainy.visibility = View.VISIBLE
+            "snow" ->
+                holder.weatherIconRainy.visibility = View.VISIBLE
+            "hail" ->
+                holder.weatherIconRainy.visibility = View.VISIBLE
+            "thunderstorm" ->
+                holder.weatherIconRainy.visibility = View.VISIBLE
+        }
+
+        if(holder.weatherIconSunny.isVisible) {
+            holder.weatherTempSunny.visibility = View.VISIBLE
+            holder.weatherCelsiusSunny.visibility = View.VISIBLE
+        } else {
+            holder.weatherTempSunny.visibility = View.GONE
+            holder.weatherCelsiusSunny.visibility = View.GONE
+        }
+
+        if(holder.weatherIconCloudy.isVisible) {
+            holder.weatherTempCloudy.visibility = View.VISIBLE
+            holder.weatherCelsiusCloudy.visibility = View.VISIBLE
+        } else {
+            holder.weatherTempCloudy.visibility = View.GONE
+            holder.weatherCelsiusCloudy.visibility = View.GONE
+        }
+
+        if(holder.weatherIconRainy.isVisible) {
+            holder.weatherTempRainy.visibility = View.VISIBLE
+            holder.weatherCelsiusRainy.visibility = View.VISIBLE
+        } else {
+            holder.weatherTempRainy.visibility = View.GONE
+            holder.weatherCelsiusRainy.visibility = View.GONE
+        }
+
+        val imgUri = item.image.toUri().buildUpon().scheme("https").build()
+
+        holder.eventItemImage.load(imgUri) {
+            error(R.drawable.app_logo)
+            transformations(RoundedCornersTransformation(10f))
         }
 
         holder.eventListCard.setOnClickListener {
@@ -87,11 +154,22 @@ class EventAdapter(private val viewModel: MainViewModel) :
         }
 
     }
-
     // damit der LayoutManager weiß wie lang die Liste ist
     override fun getItemCount(): Int {
         return dataset.size
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
