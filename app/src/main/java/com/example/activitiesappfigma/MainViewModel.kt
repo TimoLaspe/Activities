@@ -2,6 +2,7 @@ package com.example.activitiesappfigma
 
 import android.app.Application
 import android.content.ContentValues.TAG
+import android.net.Uri
 import android.os.Build
 import android.provider.CalendarContract
 import android.util.Log
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
 import kotlinx.coroutines.launch
@@ -26,6 +28,9 @@ import java.net.URI
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
+
+    private var lat: Double = 52.0
+    private var lon: Double = 13.0
 
     private val repository = Repository(WeatherApi)
 
@@ -66,9 +71,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val event: LiveData<Event>
         get() = _event
 
-    private val _events = MutableLiveData<List<Event>>()
-    val events: LiveData<List<Event>>
-        get() = _events
+    val events = repository.events
 
     private val _toast = MutableLiveData<String?>()
     val toast: LiveData<String?>
@@ -76,7 +79,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val updatedEvents = repository.events
 
-   // private val sto = FirebaseFirestorage.getInstance()
+    // Kommunikationspunkt mit Firebase Storage
+    private val storage = FirebaseStorage.getInstance()
+    private val storageRef = storage.reference
+
+    // private val sto = FirebaseFirestorage.getInstance()
 
     /*
     private val _image: String
@@ -120,16 +127,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
- //   fun uploadImage (uri: URI) {
-   //     val imageR = storageRef.child(currentUser.value?.uid)
+    //   fun uploadImage (uri: URI) {
+    //     val imageR = storageRef.child(currentUser.value?.uid)
     //}
 
-    fun insertEvent(event: Event) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun insertEvent(event: Event, uri: Uri?) {
         db.collection("events").add(event)
             .addOnFailureListener {
                 Log.e(TAG, "Error writing document: $it")
                 _toast.value = "error creating user\n${it.localizedMessage}"
                 _toast.value = null
+            }
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    _event.value = event
+                    if (uri != null) {
+                        uploadImage(uri, it.result.id)
+                    }
+                }
             }
     }
 
@@ -166,7 +182,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-
+/*
     fun getEventData() {
         db.collection("events")
             .get()
@@ -182,13 +198,58 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 Log.w(TAG, "Error getting documents: ", exception)
             }
     }
-
+*/
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun loadWeather(events: List<Event>) {
-        viewModelScope.launch {
-            repository.getWeatherForEvents(events)
+    fun uploadImage(uri: Uri, id: String) {
+        val imageRef = storageRef.child("images/${id}/eventspic")
+        val uploadTask = imageRef.putFile(uri)
+
+        uploadTask.addOnFailureListener {
+            Log.e("MainViewModel", "upload failed: $it")
+        }
+
+        uploadTask.addOnSuccessListener {
+            Log.e("MainViewModel", "upload worked")
+        }
+
+        uploadTask.addOnCompleteListener {
+            imageRef.downloadUrl.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    setImage(it.result, id)
+                }
+            }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setImage(uri: Uri, id: String) {
+        db.collection("events").document(id)
+            .update("image", uri.toString())
+            .addOnFailureListener {
+                Log.w(TAG, "Error writing document: $it")
+            }
+            .addOnCompleteListener {
+                getEventDataWithWeater(lat, lon)
+            }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getEventDataWithWeater(lon: Double, lat: Double) {
+        db.collection("events")
+            .get()
+            .addOnSuccessListener { result ->
+                val out = mutableListOf<Event>()
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    out.add(document.toObject(Event::class.java))
+                }
+                viewModelScope.launch {
+                    repository.getWeatherForEvents(out, lon, lat)
+                }
+
+
+            }
+    }
 }

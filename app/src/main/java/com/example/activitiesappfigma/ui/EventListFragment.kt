@@ -3,6 +3,7 @@ package com.example.activitiesappfigma.ui
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,14 +25,13 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 
-class EventListFragment: Fragment() {
+class EventListFragment: Fragment(){
 
     lateinit var binding: FragmentEventlistBinding
     private val viewModel: MainViewModel by activityViewModels()
-    var lat: Double = 52.0
-    var lon: Double = 7.6
 
-    var image = R.id.event_item_image
+    private var lat: Double = 52.0
+    private var lon: Double = 13.0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,24 +53,21 @@ class EventListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val eventAdapter = EventAdapter(viewModel)
 
         binding.eventRecycler.adapter = eventAdapter
-        viewModel.getEventData()
+
+        //TODO: hier hole ich die Events mit Wetterdaten
+        //TODO: sieh dir an wie das ganze funktioniert!
+        //TODO: Hier sind aktuell die Standortdaten von Berlin hardcoded (oben über der onCreate)
+        //TODO: Überlegen das noch zu ändern
+        viewModel.getEventDataWithWeater(lon, lat)
 
         viewModel.events.observe(
             viewLifecycleOwner,
             Observer {
-                viewModel.loadWeather(it)
-            }
-        )
-
-        viewModel.updatedEvents.observe(
-            viewLifecycleOwner, Observer {
-                if (it != null) {
-                    eventAdapter.submitList(it)
-                }
+                eventAdapter.submitList(it)
+            Log.e("EventListFragment", "Observer got the Data")
             }
         )
 

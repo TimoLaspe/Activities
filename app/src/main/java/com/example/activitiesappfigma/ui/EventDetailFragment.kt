@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.example.activitiesappfigma.MainActivity
 import com.example.activitiesappfigma.MainViewModel
 import com.example.activitiesappfigma.R
@@ -54,18 +58,27 @@ class EventDetailFragment : Fragment() {
             }
         )
 
-        viewModel.getEventData()
+        var memberCounter = 10
+
+        binding.detailMembercountText.text = memberCounter.toString()
+
+        binding.detailJoinEventButton.setOnClickListener {
+            memberCounter ++
+                binding.detailMembercountText.text = memberCounter.toString()
+            val toast = Toast.makeText(context,"Super, du bist dem Event beigetreten!", Toast.LENGTH_SHORT)
+            toast.show()
+        }
+      //  viewModel.getEventDataWithWeater(lon,lat)
 
         viewModel.event.observe(
             viewLifecycleOwner,
             Observer {
-                binding.detailImage.setImageResource(R.drawable.app_logo)
+                binding.detailImage.load(it.image)
                 binding.detailEventnameText.text = it.name
                 binding.detailDescriptionText.text = it.info
                 binding.detailLocationText.text = it.location
                 binding.detailDateText.text = it.dateAndTime
-                binding.detailProfilenameText.text = it.id
-                binding.detailMembercountText.text = "10"
+                binding.detailProfilenameText.text = "Profilname"
                 binding.detailTimeText.text = "19 Uhr"
             }
         )

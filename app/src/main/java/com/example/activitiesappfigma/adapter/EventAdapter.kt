@@ -7,8 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.net.toUri
-import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -16,12 +14,8 @@ import coil.transform.RoundedCornersTransformation
 import com.example.activitiesappfigma.MainViewModel
 import com.example.activitiesappfigma.R
 import com.example.activitiesappfigma.data.model.Event
-import com.example.activitiesappfigma.data.model.Profile
-import com.example.activitiesappfigma.data.model.WeatherData
-import com.example.activitiesappfigma.databinding.FragmentEventeditBinding
-import com.google.firebase.firestore.FirebaseFirestore
 
-class EventAdapter(private val viewModel: MainViewModel, var weatherDataset : List<WeatherData>) : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
+class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<EventAdapter.ItemViewHolder>() {
 
 
     // IDEE EINES VIEWHOLDERS
@@ -35,15 +29,8 @@ class EventAdapter(private val viewModel: MainViewModel, var weatherDataset : Li
         var eventPlaceText: TextView = view.findViewById(R.id.event_item_place_text)
         var eventMemberCount: TextView = view.findViewById(R.id.event_item_member_count)
         var eventListCard: CardView = view.findViewById(R.id.event_item_card)
-        var weatherIconSunny: ImageView = view.findViewById(R.id.weather_icon_sun)
-        var weatherIconRainy: ImageView = view.findViewById(R.id.weather_icon_rain)
-        var weatherIconCloudy: ImageView = view.findViewById(R.id.weather_icon_cloud)
-        var weatherTempSunny: TextView = view.findViewById(R.id.weather_temp_text_sunny)
-        var weatherTempRainy: TextView = view.findViewById(R.id.weather_temp_text_rainy)
-        var weatherTempCloudy: TextView = view.findViewById(R.id.weather_temp_text_cloudy)
-        var weatherCelsiusSunny: TextView = view.findViewById(R.id.weather_celsius_text_sunny)
-        var weatherCelsiusRainy: TextView = view.findViewById(R.id.weather_celsius_text_rainy)
-        var weatherCelsiusCloudy: TextView = view.findViewById(R.id.weather_celsius_text_cloudy)
+        var weather: ImageView = view.findViewById(R.id.weather_icon)
+        var weatherTemp: TextView = view.findViewById(R.id.weather_temp)
     }
 
     private var dataset = listOf<Event>()
@@ -81,64 +68,26 @@ class EventAdapter(private val viewModel: MainViewModel, var weatherDataset : Li
         holder.eventPlaceText.text = item.location
         holder.eventProfileName.text = "Profilname"
         holder.eventMemberCount.text = "10"
-
-
-        val weatherItem: WeatherData = weatherDataset[position]
-        holder.weatherTempSunny.text = weatherItem.temp
-        holder.weatherTempCloudy.text = weatherItem.temp
-        holder.weatherTempRainy.text = weatherItem.temp
+        holder.weatherTemp.text = item.temp.toString()
 
 
 
-        when(weatherItem.icon) {
-            "clear-day" ->
-                holder.weatherIconSunny.visibility = View.VISIBLE
-            "clear-night" ->
-                holder.weatherIconSunny.visibility = View.VISIBLE
-            "partly-cloudy-day" ->
-                holder.weatherIconCloudy.visibility = View.VISIBLE
-            "partly-cloudy-night" ->
-                holder.weatherIconCloudy.visibility = View.VISIBLE
-            "cloudy" ->
-                holder.weatherIconCloudy.visibility = View.VISIBLE
-            "fog" ->
-                holder.weatherIconCloudy.visibility = View.VISIBLE
-            "wind" ->
-                holder.weatherIconCloudy.visibility = View.VISIBLE
-            "rain" ->
-                holder.weatherIconRainy.visibility = View.VISIBLE
-            "sleet" ->
-                holder.weatherIconRainy.visibility = View.VISIBLE
-            "snow" ->
-                holder.weatherIconRainy.visibility = View.VISIBLE
-            "hail" ->
-                holder.weatherIconRainy.visibility = View.VISIBLE
-            "thunderstorm" ->
-                holder.weatherIconRainy.visibility = View.VISIBLE
-        }
+        // TODO
+       // while(item.temp != null) {
 
-        if(holder.weatherIconSunny.isVisible) {
-            holder.weatherTempSunny.visibility = View.VISIBLE
-            holder.weatherCelsiusSunny.visibility = View.VISIBLE
-        } else {
-            holder.weatherTempSunny.visibility = View.GONE
-            holder.weatherCelsiusSunny.visibility = View.GONE
-        }
+     //   clear-day┃clear-night┃partly-cloudy-day┃partly-cloudy-night┃cloudy┃fog┃wind┃rain┃sleet┃snow┃hail┃thunderstorm┃
 
-        if(holder.weatherIconCloudy.isVisible) {
-            holder.weatherTempCloudy.visibility = View.VISIBLE
-            holder.weatherCelsiusCloudy.visibility = View.VISIBLE
-        } else {
-            holder.weatherTempCloudy.visibility = View.GONE
-            holder.weatherCelsiusCloudy.visibility = View.GONE
-        }
-
-        if(holder.weatherIconRainy.isVisible) {
-            holder.weatherTempRainy.visibility = View.VISIBLE
-            holder.weatherCelsiusRainy.visibility = View.VISIBLE
-        } else {
-            holder.weatherTempRainy.visibility = View.GONE
-            holder.weatherCelsiusRainy.visibility = View.GONE
+        val weather = when (item.weather) {
+            "clear-day" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_sunny_24)
+            "clear-night" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_sunny_24)
+            "partly-cloudy-day" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_cloudy_24)
+            "partly-cloudy-night" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_cloudy_24)
+            "cloudy" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_cloudy_24)
+            "fog" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_cloudy_24)
+            "wind" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_cloudy_24)
+            "snow" -> holder.weather.setImageResource(R.drawable.ic_baseline_snow)
+            "rain" -> holder.weather.setImageResource(R.drawable.ic_baseline_water_drop_24)
+            else -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_cloudy_24)
         }
 
         val imgUri = item.image.toUri().buildUpon().scheme("https").build()

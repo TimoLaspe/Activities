@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 
@@ -14,11 +15,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.activitiesappfigma.MainActivity
 import com.example.activitiesappfigma.MainViewModel
 import com.example.activitiesappfigma.R
@@ -36,8 +40,13 @@ class EventEditFragment : Fragment() {
 
     lateinit var binding: FragmentEventeditBinding
     private val viewModel: MainViewModel by activityViewModels()
-    private val db = FirebaseFirestore.getInstance()
-    private lateinit var ImageUri: Uri
+    private var uri: Uri? = null
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { localUri: Uri? ->
+        if (localUri != null) {
+            uri = localUri
+            binding.eventeditImage.load(uri)
+        }
+    }
 
 
     override fun onCreateView(
@@ -57,14 +66,15 @@ class EventEditFragment : Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.editImageButton.setOnClickListener {
-
-            selectImage()
+            getContent.launch("image/*")
         }
+
+
         binding.categorySpinner.setOnTouchListener { view, motionEvent ->
             val imm: InputMethodManager =
                 requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -122,20 +132,9 @@ class EventEditFragment : Fragment() {
             }
         }
     */
-    private fun selectImage(): String {
-        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-        startActivityForResult(gallery, 100)
-        return gallery.toString()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100 && resultCode == RESULT_OK)
-            ImageUri = data?.data!!
-        binding.eventeditImage.setImageURI(ImageUri).toString()
-    }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun startEvent() {
         val eventEditName = binding.eventeditTextInputName.text.toString()
         val eventEditInfo = binding.eventeditTextInputInfo.text.toString()
@@ -155,7 +154,7 @@ class EventEditFragment : Fragment() {
                 .isNullOrEmpty() && !eventEditLocation.isNullOrEmpty()
         ) {
             val newEvent = Event(
-                image = selectImage().toString(),
+                image = "",
                 name = eventEditName,
                 info = eventEditInfo,
                 dateAndTime = eventEditDateTime,
@@ -163,7 +162,7 @@ class EventEditFragment : Fragment() {
                 category = eventEditCategory,
                 routine = isRoutine
             )
-            viewModel.insertEvent(newEvent)
+            viewModel.insertEvent(newEvent, uri)
 
         }
     }

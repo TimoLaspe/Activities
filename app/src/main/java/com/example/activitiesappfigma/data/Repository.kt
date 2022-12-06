@@ -140,31 +140,36 @@ class Repository(private val api: WeatherApi) {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun getWeatherForEvents(events: List<Event>) {
+    suspend fun getWeatherForEvents(events: List<Event>, lon: Double, lat: Double) {
         val updatedEvents = mutableListOf<Event>()
         for (event in events) {
 
-            val returnWeather = getWeather(0.0, 0.0, event.dateAndTime)
+            // TODO: Das richtige Datum des Events verwenden und nicht das Datum hier
+            // TODO: Wie das Format aussehen muss siehst du ja hier:
+            val date = event.dateAndTime
+            val returnWeather = getWeather(lon, lat, date)
 
             if (returnWeather.isEmpty()) {
                 event.weather = "unknown"
             } else {
-                event.weather = returnWeather.first().icon
+                // TODO: nimmt aktuell ein Random Element aus der Liste, das muss noch geändert werden
+                // TODO: Diese Liste enthält alle stündlichen Wetterdaten für das Datum
+                // TODO: Also Item an Stelle 0 ist 00:00 Uhr, Item an Stelle 1 ist 01:00 Uhr usw.
+                event.weather = returnWeather.random().icon
             }
-
             updatedEvents.add(event)
-
         }
         _events.value = updatedEvents
+        Log.e("Repository", "updated Events ${updatedEvents[0]}")
     }
 
-    suspend fun getWeather(lon: Double, lat: Double, date: String): List<WeatherData> {
+    suspend fun getWeather(lon: Double, lat: Double, date: String) : List<WeatherData> {
         try {
 
-            val result = api.retrofitService.getWeather(52.0, 7.6, date)
+            val result = api.retrofitService.getWeather(lat, lon, date)
             return result.data
 
-        } catch (e: Exception) {
+        }catch (e: Exception){
             Log.e(ContentValues.TAG, "Error loading weather from API: $e")
         }
         return listOf()
