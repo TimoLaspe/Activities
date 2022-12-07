@@ -14,7 +14,7 @@ data class Event (
     var routine: Boolean = false,
     var category: String = "",
     var weather: String = "",
-    var temp: Double = 0.0,
+    var temp: String = "",
     var weatherIcon: String = ""
 //TODO: So wie hier mit weather könntest du es auch noch mit der Temperatur machen
     )

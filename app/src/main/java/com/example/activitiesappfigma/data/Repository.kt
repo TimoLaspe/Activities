@@ -155,7 +155,8 @@ class Repository(private val api: WeatherApi) {
                 // TODO: nimmt aktuell ein Random Element aus der Liste, das muss noch geändert werden
                 // TODO: Diese Liste enthält alle stündlichen Wetterdaten für das Datum
                 // TODO: Also Item an Stelle 0 ist 00:00 Uhr, Item an Stelle 1 ist 01:00 Uhr usw.
-                event.weather = returnWeather.random().icon
+                event.weather = returnWeather[10].icon
+                event.temp = returnWeather[10].temp
             }
             updatedEvents.add(event)
         }

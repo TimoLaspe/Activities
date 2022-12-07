@@ -68,7 +68,7 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
         holder.eventPlaceText.text = item.location
         holder.eventProfileName.text = "Profilname"
         holder.eventMemberCount.text = "10"
-        holder.weatherTemp.text = item.temp.toString()
+        holder.weatherTemp.text = item.temp
 
 
 
