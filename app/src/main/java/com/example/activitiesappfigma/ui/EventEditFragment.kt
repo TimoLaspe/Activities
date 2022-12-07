@@ -112,27 +112,6 @@ class EventEditFragment : Fragment() {
 
     }
 
-    /*
-        private fun uploadImage() {
-            val  progressDialog = ProgressDialog(context)
-            progressDialog.setMessage("UPLOAD IMAGE ")
-            progressDialog.setCancelable(false)
-            progressDialog.show()
-            val formatter  = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val now = Date()
-            val fileName = formatter.format(now)
-            val storageRef = FirebaseStorage.getInstance().getReference("image/$fileName")
-            storageRef.putFile(ImageUri).addOnSuccessListener {
-                binding.eventeditImage.setImageURI(null)
-                Toast.makeText(context,"successfuly uploaded",Toast.LENGTH_SHORT).show()
-                if (progressDialog.isShowing)progressDialog.dismiss()
-            }.addOnFailureListener{
-                if (progressDialog.isShowing)progressDialog.dismiss()
-                Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
-            }
-        }
-    */
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun startEvent() {

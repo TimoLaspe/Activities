@@ -159,13 +159,16 @@
             app:layout_constraintTop_toBottomOf="@+id/eventedit_eventLocation"
             tools:text="Datum" />
 
-        <Button
+        <ImageButton
             android:id="@+id/edit_image_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/main_color"
+            android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/eventedit_image"
-            app:layout_constraintStart_toEndOf="@+id/eventedit_image" />
+            app:layout_constraintStart_toEndOf="@+id/eventedit_image"
+            app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
