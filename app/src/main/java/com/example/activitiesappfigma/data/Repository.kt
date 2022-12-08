@@ -144,17 +144,16 @@ class Repository(private val api: WeatherApi) {
         val updatedEvents = mutableListOf<Event>()
         for (event in events) {
 
-            // TODO: Das richtige Datum des Events verwenden und nicht das Datum hier
-            // TODO: Wie das Format aussehen muss siehst du ja hier:
+            // Datum des Events
             val date = event.dateAndTime
             val returnWeather = getWeather(lon, lat, date)
 
             if (returnWeather.isEmpty()) {
                 event.weather = "unknown"
             } else {
-                // TODO: nimmt aktuell ein Random Element aus der Liste, das muss noch geändert werden
-                // TODO: Diese Liste enthält alle stündlichen Wetterdaten für das Datum
-                // TODO: Also Item an Stelle 0 ist 00:00 Uhr, Item an Stelle 1 ist 01:00 Uhr usw.
+                // nimmt aktuell das zehnte Element aus der Liste (10 Uhr vormittags)
+                // Diese Liste enthält alle stündlichen Wetterdaten für das Datum
+                // Item an Stelle 0 ist 00:00 Uhr, Item an Stelle 1 ist 01:00 Uhr usw.
                 event.weather = returnWeather[10].icon
                 event.temp = returnWeather[10].temp
             }

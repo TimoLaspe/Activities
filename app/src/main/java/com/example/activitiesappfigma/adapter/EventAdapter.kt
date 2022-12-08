@@ -72,12 +72,9 @@ class EventAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<
 
 
 
-        // TODO
-       // while(item.temp != null) {
-
      //   clear-day┃clear-night┃partly-cloudy-day┃partly-cloudy-night┃cloudy┃fog┃wind┃rain┃sleet┃snow┃hail┃thunderstorm┃
 
-        val weather = when (item.weather) {
+       when (item.weather) {
             "clear-day" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_sunny_24)
             "clear-night" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_sunny_24)
             "partly-cloudy-day" -> holder.weather.setImageResource(R.drawable.ic_baseline_wb_cloudy_24)

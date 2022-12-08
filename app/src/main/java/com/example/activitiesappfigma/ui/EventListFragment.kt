@@ -30,6 +30,7 @@ class EventListFragment: Fragment(){
     lateinit var binding: FragmentEventlistBinding
     private val viewModel: MainViewModel by activityViewModels()
 
+    // Koordinaten für Wetter API (Berlin)
     private var lat: Double = 52.0
     private var lon: Double = 13.0
 
@@ -57,10 +58,7 @@ class EventListFragment: Fragment(){
 
         binding.eventRecycler.adapter = eventAdapter
 
-        //TODO: hier hole ich die Events mit Wetterdaten
-        //TODO: sieh dir an wie das ganze funktioniert!
-        //TODO: Hier sind aktuell die Standortdaten von Berlin hardcoded (oben über der onCreate)
-        //TODO: Überlegen das noch zu ändern
+        // Events mit Wetterdaten holen
         viewModel.getEventDataWithWeater(lon, lat)
 
         viewModel.events.observe(

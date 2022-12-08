@@ -29,6 +29,7 @@ import java.net.URI
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
+    // Wetterstandort (Berlin in diesem Fall)
     private var lat: Double = 52.0
     private var lon: Double = 13.0
 
@@ -42,6 +43,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _photo.value = repository.loadPhoto()
     }
 
+    // LiveData für Kategorien
     private val _category = MutableLiveData<List<Category>>()
     val category: LiveData<List<Category>>
         get() = _category
@@ -77,19 +79,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val toast: LiveData<String?>
         get() = _toast
 
-    val updatedEvents = repository.events
+
 
     // Kommunikationspunkt mit Firebase Storage
     private val storage = FirebaseStorage.getInstance()
     private val storageRef = storage.reference
-
-    // private val sto = FirebaseFirestorage.getInstance()
-
-    /*
-    private val _image: String
-    var image: String = ""
-        get() = _image
-     */
 
 
     // hier wird versucht einen User zu erstellen um diesen anschließend auch gleich
@@ -127,9 +121,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-    //   fun uploadImage (uri: URI) {
-    //     val imageR = storageRef.child(currentUser.value?.uid)
-    //}
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun insertEvent(event: Event, uri: Uri?) {
@@ -172,6 +163,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _currentUser.value = firebaseAuth.currentUser
     }
 
+
+    //Hier werden die Profildaten aus dem Firestore geholt
+
     fun getProfileData() {
         db.collection("users").document(currentUser.value!!.uid)
             .get().addOnSuccessListener {
@@ -182,23 +176,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
-/*
-    fun getEventData() {
-        db.collection("events")
-            .get()
-            .addOnSuccessListener { result ->
-                val out = mutableListOf<Event>()
-                for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                    out.add(document.toObject(Event::class.java))
-                }
-                _events.value = out
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-    }
-*/
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun uploadImage(uri: Uri, id: String) {
@@ -222,6 +199,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    //Hier wird das Bild zum Event in den Firestore gesetzt
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setImage(uri: Uri, id: String) {
         db.collection("events").document(id)
@@ -234,6 +213,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
     }
 
+    // Hier werden die Eventdaten + Wetter geholt
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getEventDataWithWeater(lon: Double, lat: Double) {

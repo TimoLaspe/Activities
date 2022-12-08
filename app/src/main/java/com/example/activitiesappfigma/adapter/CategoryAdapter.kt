@@ -58,6 +58,7 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.ItemViewHolder>()
             holder.selectedCard.visibility = View.VISIBLE
         }
 
+
         holder.categoryCard.setOnClickListener {
 
 

@@ -40,6 +40,7 @@ class EventEditFragment : Fragment() {
 
     lateinit var binding: FragmentEventeditBinding
     private val viewModel: MainViewModel by activityViewModels()
+
     private var uri: Uri? = null
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { localUri: Uri? ->
         if (localUri != null) {
@@ -80,6 +81,8 @@ class EventEditFragment : Fragment() {
                 requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+
+
         binding.btnCalendar.setOnClickListener {
             // create new instance of DatePickerFragment
             val datePickerFragment = DatePicker()
