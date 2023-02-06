@@ -1,6 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_simple">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/eventedit_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/main_color"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/eventedit_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Neues Event"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/eventedit_toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/eventedit_toolbar"
+            app:layout_constraintStart_toStartOf="@+id/eventedit_toolbar"
+            app:layout_constraintTop_toTopOf="@+id/eventedit_toolbar" />
+
+        <ImageView
+            android:id="@+id/eventedit_image"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="32dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_toolbar"
+            app:srcCompat="@drawable/app_logo" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/eventedit_eventName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="@+id/eventedit_image"
+            app:layout_constraintStart_toStartOf="@+id/eventedit_image"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_image">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eventedit_textInputName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Eventname"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/eventedit_eventInfo"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventName"
+            app:layout_constraintStart_toStartOf="@+id/eventedit_eventName"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eventedit_textInputInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Eventbeschreibung"
+                android:textColor="#000000" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/eventedit_eventLocation"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventInfo"
+            app:layout_constraintStart_toStartOf="@+id/eventedit_eventInfo"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventInfo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eventedit_textInputLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ort"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:entries="@array/category_list"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="@+id/btn_calendar"
+            app:layout_constraintStart_toStartOf="@+id/date_text_tv"
+            app:layout_constraintTop_toBottomOf="@+id/date_text_tv" />
+
+        <Button
+            android:id="@+id/eventedit_startEvent_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main_color"
+            android:text="Event starten"
+            app:layout_constraintBottom_toBottomOf="@+id/routine_switch_button"
+            app:layout_constraintEnd_toEndOf="@+id/category_spinner"
+            app:layout_constraintTop_toTopOf="@+id/routine_switch_button" />
+
+        <Switch
+            android:id="@+id/routine_switch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Routine"
+            app:layout_constraintStart_toStartOf="@+id/category_spinner"
+            app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
+
+        <ImageButton
+            android:id="@+id/btn_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main_color"
+            android:tint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/date_text_tv"
+            app:layout_constraintEnd_toEndOf="@+id/eventedit_eventLocation"
+            app:layout_constraintTop_toTopOf="@+id/date_text_tv"
+            app:srcCompat="@drawable/ic_baseline_calendar_month_24" />
+
+        <TextView
+            android:id="@+id/date_text_tv"
+            android:layout_width="234dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Datum"
+            android:paddingStart="8dp"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/eventedit_eventLocation"
+            app:layout_constraintTop_toBottomOf="@+id/eventedit_eventLocation"
+            tools:text="Datum" />
+
+        <ImageButton
+            android:id="@+id/edit_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/main_color"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/eventedit_image"
+            app:layout_constraintStart_toEndOf="@+id/eventedit_image"
+            app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

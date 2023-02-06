@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/detail_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/main_color"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/detail_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event beitreten"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/detail_toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/detail_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/detail_toolbar" />
+
+        <ScrollView
+            android:id="@+id/detail_scrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/detail_image"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/app_logo" />
+
+                <TextView
+                    android:id="@+id/detail_eventname_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_image"
+                    tools:text="Offenes Training" />
+
+                <TextView
+                    android:id="@+id/detail_profilename_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/detail_eventname_text"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_eventname_text"
+                    tools:text="FC Football Friends" />
+
+                <TextView
+                    android:id="@+id/detail_location_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/detail_profilename_text"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_profilename_text"
+                    tools:text="Stadion Wizenhausen" />
+
+                <TextView
+                    android:id="@+id/detail_date_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/detail_location_text"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_location_text"
+                    tools:text="22.11.2022" />
+
+                <TextView
+                    android:id="@+id/detail_textline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="|"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_date_text"
+                    app:layout_constraintStart_toEndOf="@+id/detail_date_text"
+                    app:layout_constraintTop_toTopOf="@+id/detail_date_text" />
+
+                <TextView
+                    android:id="@+id/detail_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_textline"
+                    app:layout_constraintStart_toEndOf="@+id/detail_textline"
+                    app:layout_constraintTop_toTopOf="@+id/detail_textline"
+                    tools:text="19 Uhr" />
+
+                <TextView
+                    android:id="@+id/detail_member_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="Teilnehmer:"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_time_text"
+                    app:layout_constraintEnd_toStartOf="@+id/detail_membercount_text"
+                    app:layout_constraintTop_toTopOf="@+id/detail_time_text" />
+
+                <TextView
+                    android:id="@+id/detail_membercount_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_member_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/detail_member_text"
+                    tools:text="23" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/main_color"
+                    app:layout_constraintEnd_toEndOf="@+id/detail_membercount_text"
+                    app:layout_constraintStart_toStartOf="@+id/detail_date_text"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_time_text" />
+
+                <TextView
+                    android:id="@+id/detail_description_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Beschreibung"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/view3"
+                    app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+                <TextView
+                    android:id="@+id/detail_description_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/detail_description_title"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_description_title"
+                    tools:text="Der FC Football Friends lädt herzlich zum offenen Probetraining ein. Du liebst Fussball und hast einen starken Teamgeist? Du willst dich weiter entwickeln und allen zeigen, was du drauf hast? Dann bist du bei uns genau richtig! Wir sind ein nettes Team und freuen uns dich kennen zu lernen! Bis bald! " />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/main_color"
+                    app:layout_constraintEnd_toEndOf="@+id/detail_description_text"
+                    app:layout_constraintStart_toStartOf="@+id/detail_description_text"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_description_text" />
+
+                <TextView
+                    android:id="@+id/detail_photos_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Fotos"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/view4"
+                    app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/photo_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_photos_title"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/eventdetail_photo_item" />
+
+                <Button
+                    android:id="@+id/detail_joinEvent_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="24dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="Event beitreten"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/photo_recycler" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

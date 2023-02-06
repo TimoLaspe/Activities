@@ -2,12 +2,14 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_item_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:alpha="50">
 
         <ImageView
             android:id="@+id/event_item_image"
@@ -27,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_marginTop="8dp"
-            android:background="@color/background_orange"
+            android:background="@color/main_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_item_image" />
@@ -128,5 +130,39 @@
             app:layout_constraintEnd_toStartOf="@+id/event_item_member_text"
             app:layout_constraintTop_toTopOf="@+id/event_item_member_text"
             tools:text="23" />
+
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/event_item_image"
+            app:layout_constraintTop_toTopOf="@+id/event_item_image"
+            app:srcCompat="@drawable/ic_baseline_wb_sunny_24" />
+
+        <TextView
+            android:id="@+id/weather_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/weather_icon"
+            app:layout_constraintTop_toTopOf="@+id/weather_icon"
+            tools:text="20" />
+
+        <TextView
+            android:id="@+id/weather_celsius_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="°C"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/weather_temp"
+            app:layout_constraintStart_toEndOf="@+id/weather_temp"
+            app:layout_constraintTop_toTopOf="@+id/weather_temp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Activities App Figma</string>
+    <string-array name="category_list">
+        <item>Sport</item>
+        <item>Musik</item>
+        <item>Freizeit</item>
+        <item>Essen</item>
+        <item>Gesundheit</item>
+        <item>Mode</item>
+        <item>Tiere</item>
+        <item>Körper und Geist</item>
+        <item>Technik</item>
+        <item>Natur</item>
+        <item>Autos</item>
+        <item>Lifestyle</item>
+        <item>Fahrrad</item>
+        <item>Wandern</item>
+        <item>Gaming</item>
+        <item>Reisen</item>
+        <item>Literatur</item>
+        <item>Wellness</item>
+    </string-array>
 </resources>

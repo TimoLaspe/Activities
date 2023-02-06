@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="Community"
-        android:id="@+id/community"
+        android:id="@+id/eventListFragment"
         android:icon="@drawable/ic_baseline_location_city_24"/>
     <item android:title="Neues Event"
-        android:id="@+id/newEvent"
+        android:id="@+id/eventEditFragment"
         android:icon="@drawable/ic_baseline_event_24"/>
     <item android:title="Profil"
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_baseline_person_24"/>
 </menu>

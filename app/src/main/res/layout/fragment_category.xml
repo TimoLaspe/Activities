@@ -13,10 +13,10 @@
         android:background="@drawable/background_simple">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/category_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/background_orange"
+            android:background="@color/main_color"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,41 +24,43 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/category_toolbar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Was gefällt dir?"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@+id/category_toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/category_toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/toolbar" />
+            app:layout_constraintTop_toTopOf="@+id/category_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_recycler"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/category_toolbar"
             app:layout_constraintVertical_bias="0.0"
             app:spanCount="2"
             tools:listitem="@layout/category_list_item" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/category_continue_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="16dp"
             android:backgroundTint="@color/background_blue"
-            android:tint="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/category_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+            app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
+            app:tint="#000000" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
